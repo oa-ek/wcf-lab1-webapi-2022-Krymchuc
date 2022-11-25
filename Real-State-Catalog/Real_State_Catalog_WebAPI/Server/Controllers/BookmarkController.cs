@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Real_State_Catalog_WebAPI.Models;
 using Real_State_Catalog_WebAPI.Data;
 
-namespace Real_State_Catalog.Controllers
+namespace Real_State_Catalog_WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
