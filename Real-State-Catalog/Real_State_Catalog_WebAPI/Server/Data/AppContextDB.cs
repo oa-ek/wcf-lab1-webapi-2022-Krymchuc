@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Real_State_Catalog_WebAPI.Models;
 
 namespace Real_State_Catalog_WebAPI.Data
 {
-    public class AppContextDB : IdentityDbContext<User>
+    public class AppContextDB : DbContext
     {
         public AppContextDB(DbContextOptions<AppContextDB> options) : base(options) { }
 

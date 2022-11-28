@@ -53,8 +53,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: UserController/Details
-        [HttpGet("Details")]
-        public async Task<IActionResult> Details(string id)
+       // [HttpGet("Details")]
+        /*public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -72,7 +72,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
 
             return View(user);
-        }
+        }*/
 
         // GET: UserController/Edit
         [HttpGet("Edit")]
