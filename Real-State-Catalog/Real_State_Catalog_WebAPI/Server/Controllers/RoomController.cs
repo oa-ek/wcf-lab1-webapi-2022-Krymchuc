@@ -17,7 +17,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Accommodation/ManageRooms
-        [HttpGet("Accommodation/ManageRooms/{id?}")]
+        /// <summary>
+        /// Method manages rooms 
+        /// </summary>
+        [HttpGet("accommodation/rooms/{id?}")]
         public async Task<IActionResult> ManageRooms(Guid? id)
         {
             if (id == null)
@@ -47,7 +50,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
 
         // POST: Accommodation/ManageRooms
-        [HttpPost("Accommodation/ManageRooms/{id?}")]
+        /// <summary>
+        /// Method manages room
+        /// </summary>
+        [HttpPost("accommodation/rooms/{id?}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ManageRooms(Guid? accommodationId, string roomType,
             string singleBedNumber, string doubleBedNumber, string tv, string closet,
@@ -152,7 +158,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Accommodation/DeletePicture
-        [HttpDelete("Accommodation/DeleteRoom/{id}")]
+        /// <summary>
+        /// Method deletes room
+        /// </summary>
+        [HttpDelete("accommodation/room/{id}")]
         public async Task<IActionResult> DeleteRoom(Guid id, Guid accommodationId)
         {
             // перевірка, чи є у користувача зображення

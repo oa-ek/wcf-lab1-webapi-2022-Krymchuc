@@ -23,29 +23,33 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Offer
-       //[HttpGet("Index")]
-       /*[NonAction]
-        public async Task<IActionResult> Index()
-        {
-            User user = await _userManager.GetUserAsync(User);
+        //[HttpGet("Index")]
+        /*[NonAction]
+         public async Task<IActionResult> Index()
+         {
+             User user = await _userManager.GetUserAsync(User);
 
-            if (user == null) { return NotFound(); }
+             if (user == null) { return NotFound(); }
 
-            if (await _userManager.IsInRoleAsync(user, "Admin"))
-            {
-                return View(await _context.Offers
-                    .Include(o => o.Accommodation).ToListAsync());
-            }
-            else
-            {
-                return View(await _context.Offers
-                    .Include(o => o.Accommodation)
-                    .Where(o => o.Accommodation.UserId == user.Id).ToListAsync());
-            }
-        }*/
+             if (await _userManager.IsInRoleAsync(user, "Admin"))
+             {
+                 return View(await _context.Offers
+                     .Include(o => o.Accommodation).ToListAsync());
+             }
+             else
+             {
+                 return View(await _context.Offers
+                     .Include(o => o.Accommodation)
+                     .Where(o => o.Accommodation.UserId == user.Id).ToListAsync());
+             }
+         }*/
 
         // GET: Offer/Details
-        [HttpGet("Details")]
+        /// <summary>
+        /// Method returns details about offer from database
+        /// </summary>
+        /// <returns> details about offer from database</returns>
+        [HttpGet("details/{id:guid}")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -63,7 +67,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
             return (IActionResult)offer;
         }
-        
+
         // GET: Offer/Create
         /*[HttpGet("Create")]
         public async Task<IActionResult> Create()
@@ -85,7 +89,11 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }*/
 
         // POST: Offer/Create
-        [HttpPost("Create")]
+        /// <summary>
+        /// Method creates offer and adds it to database
+        /// </summary>
+        /// <returns>created offer from database</returns>
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             [Bind("AccommodationId, StartAvailability, EndAvailability, PricePerNight, CleaningFee")] Offer offer)
@@ -101,7 +109,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Offer/Edit
-        [HttpGet("Edit")]
+        /*HttpGet("{id:guid}")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null) { return NotFound(); }
@@ -111,10 +119,13 @@ namespace Real_State_Catalog_WebAPI.Controllers
             if (offer == null) { return NotFound(); }
 
             return (IActionResult)offer;
-        }
+        }*/
 
         // POST: Offer/Edit
-        [HttpPost("Edit")]
+        /// <summary>
+        /// Method updates offer in database
+        /// </summary>
+        [HttpPut("{id:guid}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid? id,
             [Bind("Id, AccommodationId, StartAvailability, EndAvailability, PricePerNight, CleaningFee")] Offer offer)
@@ -172,7 +183,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }*/
 
         // POST: Offer/Delete
-        [HttpDelete("Delete")]
+        /// <summary>
+        /// Method deletes offer
+        /// </summary>
+        [HttpDelete("{id:guid}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid? id)
         {
@@ -188,8 +202,11 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Offer/View
+        /// <summary>
+        /// Method returns view of offer
+        /// </summary>
         [AllowAnonymous]
-        [HttpGet("View")]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> View(Guid? id)
         {
             if (id == null)
@@ -230,7 +247,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
             return (IActionResult)offer;
         }
-        [HttpGet("AddBookmark")]
+        /// <summary>
+        /// Method adds bookmark
+        /// </summary>
+        [HttpGet("bookmark/{id:guid}")]
         public async Task<IActionResult> AddBookmark(Guid id)
         {
             await new BookmarkController(_context, _userManager.GetUserId(User)).Add(id);
@@ -240,7 +260,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
             return RedirectToAction("View", new { id });
         }
-        [HttpDelete("DeleteBookmark")]
+        /// <summary>
+        /// Method deletes bookmark
+        /// </summary>
+        [HttpDelete("bookmark/{id:guid}")]
         public async Task<IActionResult> DeleteBookmark(Guid id)
         {
             await new BookmarkController(_context, _userManager.GetUserId(User)).Delete(id);
@@ -250,7 +273,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
             return RedirectToAction("View", new { id });
         }
-        [HttpGet("ExistBookmark")]
+        /// <summary>
+        /// Method checks for a bookmark
+        /// </summary>
+        [HttpGet("existBookmark")]
         public bool BookmarkExist(Guid offerId, string userId)
         {
             return _context.Bookmark.Any(b => b.OfferId == offerId && b.UserId == userId);

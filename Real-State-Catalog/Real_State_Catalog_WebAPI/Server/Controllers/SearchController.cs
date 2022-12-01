@@ -18,8 +18,13 @@ namespace Real_State_Catalog_WebAPI.API
                 _context = context;
             }
 
-            // GET: api/<SearchController>
-            [HttpGet("{city}/{arrivalDate}/{departureDate}/{nbPerson}")]
+        // GET: api/<SearchController>
+        /// <summary>
+        /// Method takes offers from database
+        /// </summary>
+        /// <param name="id">id of searching offers</param>
+        /// <returns>offers from db</returns>
+        [HttpGet("{city}/{arrivalDate}/{departureDate}/{nbPerson}")]
             public async Task<IEnumerable<Offer>> Get(string city, string arrivalDate, string departureDate, string nbPerson)
             {
                 IEnumerable<Offer>? offers = null;

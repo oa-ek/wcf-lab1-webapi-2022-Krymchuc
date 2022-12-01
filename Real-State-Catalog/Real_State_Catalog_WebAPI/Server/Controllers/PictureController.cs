@@ -26,7 +26,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Accommodation/ManagePictures
-        [HttpGet("ManagePictures/{id:guid?}")]
+        /// <summary>
+        /// Method manages pictures
+        /// </summary>
+        [HttpGet("{id:guid?}")]
         public async Task<IActionResult> ManagePictures(Guid? id)
         {
             if (id == null)
@@ -60,7 +63,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // POST: Accommodation/ManagePictures
-        [HttpPost("ManagePictures/{id:guid?}")]
+        /// <summary>
+        /// Method manages pictures
+        /// </summary>
+        [HttpPost("{id:guid?}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ManagePictures(Guid? id, List<IFormFile> files)
         {
@@ -100,7 +106,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Accommodation/DeletePicture
-        [HttpDelete("DeletePicture/{id:guid}")]
+        /// <summary>
+        /// Method deletes pictures
+        /// </summary>
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeletePicture(Guid id, Guid accommodationId)
         {
             //Перевірка чи є у користувача фото

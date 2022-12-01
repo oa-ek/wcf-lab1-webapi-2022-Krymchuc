@@ -27,27 +27,27 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
         // GET: Booking
         //[HttpGet("Index")]
-       /* [NonAction]
-        public async Task<IActionResult> Index()
-        {
-            User user = await _userManager.GetUserAsync(User);
+        /* [NonAction]
+         public async Task<IActionResult> Index()
+         {
+             User user = await _userManager.GetUserAsync(User);
 
-            if (user == null) { return NotFound(); }
+             if (user == null) { return NotFound(); }
 
-            ViewBag.ReturnAction = "Index";
+             ViewBag.ReturnAction = "Index";
 
-            if (await _userManager.IsInRoleAsync(user, "Admin"))
-            {
-                return View(await _context.Booking
-                    .Include(b => b.Offer).Include(b => b.User).Include(b => b.Offer.Accommodation).ToListAsync());
-            }
-            else
-            {
-                return View(await _context.Booking
-                    .Where(b => b.UserId == user.Id)
-                    .Include(b => b.Offer).Include(b => b.User).Include(b => b.Offer.Accommodation).ToListAsync());
-            }
-        }*/
+             if (await _userManager.IsInRoleAsync(user, "Admin"))
+             {
+                 return View(await _context.Booking
+                     .Include(b => b.Offer).Include(b => b.User).Include(b => b.Offer.Accommodation).ToListAsync());
+             }
+             else
+             {
+                 return View(await _context.Booking
+                     .Where(b => b.UserId == user.Id)
+                     .Include(b => b.Offer).Include(b => b.User).Include(b => b.Offer.Accommodation).ToListAsync());
+             }
+         }*/
 
         // GET: Booking/HostIndex
         /*[HttpGet("HostIndex")]
@@ -67,7 +67,11 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
 
         // POST: Booking/Details
-        [HttpPost("Details")]
+        /// <summary>
+        /// Method returns details about booking from database
+        /// </summary>
+        /// <returns> details about booking from database</returns>
+        [HttpPost("details")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Details(Guid id, string returnAction)
         {
@@ -88,7 +92,11 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // POST: Booking/Create
-        [HttpPost("Create")]
+        /// <summary>
+        /// Method creates booking and adds it to database
+        /// </summary>
+        /// <returns>created booking from db</returns>
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             [Bind("OfferId, ArrivalDate, ArrivalTime, DepartureDate, DepartureTime, NbPerson")] Booking booking)

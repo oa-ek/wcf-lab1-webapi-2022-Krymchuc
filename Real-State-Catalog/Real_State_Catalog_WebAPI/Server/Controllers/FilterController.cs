@@ -19,6 +19,11 @@ namespace Real_State_Catalog_WebAPI.API
         }
 
         // GET: api/<FilterController>
+        /// <summary>
+        /// Method takes offers from database
+        /// </summary>
+        /// <param name="id">id of filtered offers</param>
+        /// <returns>offers from db</returns>
         [HttpGet("{city}/{Type}/{nbPerson}/{PricePerNight}/")]
         public async Task<IEnumerable<Offer>> Get(string city, string Type, string nbPerson, string PricePerNight)
         {

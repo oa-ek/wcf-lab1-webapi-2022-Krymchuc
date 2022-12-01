@@ -20,7 +20,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Accommodation/ManageAmenities
-        [HttpGet("ManageAmenities/{roomId:guid?}")]
+        /// <summary>
+        /// Method manages amenities
+        /// </summary>
+        [HttpGet("{roomId:guid?}")]
         public async Task<IActionResult> ManageAmenities(Guid? roomId)
         {
             if (roomId == null) { return NotFound(); }
@@ -45,7 +48,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // POST: Accommodation/AddAmenity
-        [HttpPost("AddAmenity/{roomId:guid}")]
+        /// <summary>
+        /// Method adds amenitity
+        /// </summary>
+        [HttpPost("{roomId:guid}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddAmenity(Guid roomId, string amenityType)
         {
@@ -73,7 +79,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // POST: Accommodation/DeleteAmenity
-        [HttpDelete("DeleteAmenity/{amenityId:guid}")]
+        /// <summary>
+        /// Method deletes amenitity
+        /// </summary>
+        [HttpDelete("{amenityId:guid}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAmenity(Guid amenityId, Guid roomId)
         {

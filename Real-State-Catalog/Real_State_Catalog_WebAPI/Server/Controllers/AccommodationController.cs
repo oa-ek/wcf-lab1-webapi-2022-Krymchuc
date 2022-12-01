@@ -45,8 +45,12 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 }
             }
 
-            // GET: Accommodation/Details
-            [HttpGet("details")]
+        // GET: Accommodation/Details
+        /// <summary>
+        /// Method returns details about accommodation from database
+        /// </summary>
+        /// <returns> details about accommodation from database</returns>
+        [HttpGet("details/{id:guid}")]
             public async Task<IActionResult> Details(Guid? id)
             {
                 if (id == null)
@@ -104,7 +108,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
 
             // GET: Accommodation/Edit
-            [HttpGet("edit")]
+            /// <summary>
+            /// Method updates accommodation in database
+            /// </summary>
+            [HttpPut("{id:guid}")]
             public async Task<IActionResult> Edit(Guid? id)
             {
                 if (id == null)
@@ -167,7 +174,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
 
             // GET: Accommodation/Delete
-            [HttpGet("Delete")]
+            /// <summary>
+            /// Method deletes accommodation
+            /// </summary>
+            [HttpDelete("{id:guid}")]
             public async Task<IActionResult> Delete(Guid? id)
             {
                 if (id == null)
@@ -186,7 +196,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
 
             // POST: Accommodation/Delete
-            [HttpPost("DeleteConfirmed")]
+            /// <summary>
+            /// Method confirms the removal of accommodation
+            /// </summary>
+            [HttpPost("{id:guid}")]
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> DeleteConfirmed(Guid id)
             {

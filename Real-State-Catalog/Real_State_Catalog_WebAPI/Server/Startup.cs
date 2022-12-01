@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Real_State_Catalog_WebAPI.Data;
 using Real_State_Catalog_WebAPI.Models;
+using System.Reflection;
 
 namespace Real_State_Catalog_WebAPI
 {
@@ -36,7 +37,12 @@ namespace Real_State_Catalog_WebAPI
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
+            });
         }
 
         // Цей метод викликається середовищем виконання. Використовується цей метод для налаштування конвеєра запиту HTTP.

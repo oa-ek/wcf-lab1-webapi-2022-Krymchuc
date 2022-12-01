@@ -53,7 +53,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }*/
 
         // GET: UserController/Details
-       //[HttpGet("Details")]
+        //[HttpGet("Details")]
         /*public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -75,7 +75,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }*/
 
         // GET: UserController/Edit
-        [HttpGet("Edit")]
+        /// <summary>
+        /// Method updates user in database
+        /// </summary>
+        [HttpPut("editing")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -104,7 +107,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // POST: UserController/Edit
-        [HttpPost("Edit")]
+        /*[HttpPut("editing")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(String userId, IFormCollection collection)
         {
@@ -142,7 +145,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
 
             return RedirectToAction(nameof(Index));
-        }
+        }*/
 
         // GET: UserController/Delete
         /*[HttpGet("Detele")]
@@ -164,7 +167,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }*/
 
         // POST: UserController/Delete
-        [HttpDelete("Delete")]
+        /// <summary>
+        /// Method deletes user
+        /// </summary>
+        [HttpDelete("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {

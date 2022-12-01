@@ -18,7 +18,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
             _context = context;
             _userId = userId;
         }
-        [HttpPost("AddBookmark")]
+        /// <summary>
+        /// Method adds a bookmark
+        /// </summary>
+        [HttpPost("{offerId:guid}")]
         public async Task Add(Guid offerId)
         {
             // Перевірте, чи вже існує закладка для підключеного користувача
@@ -32,7 +35,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 await _context.SaveChangesAsync();
             }
         }
-        [HttpDelete("DeleteBookmark")]
+        /// <summary>
+        /// Method deletes a bookmark
+        /// </summary>
+        [HttpDelete("{offerId:guid}")]
         public async Task Delete(Guid offerId)
         {
             var bookmark = BookmarkExists(offerId);
@@ -46,7 +52,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
         // Перевірка, чи вже існує закладка для фактично підключеного користувача
         // Повернути закладку, якщо вона існує
-        [HttpGet("ExistBookmark")]
+        /// <summary>
+        /// Method checks for a bookmark
+        /// </summary>
+        [HttpGet("{offerId:guid}")]
         public Bookmark BookmarkExists(Guid offerId)
         {
             return _context.Bookmark.Where(b => b.OfferId == offerId && b.UserId == _userId).SingleOrDefault();
