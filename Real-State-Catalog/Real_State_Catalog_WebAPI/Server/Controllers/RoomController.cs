@@ -7,7 +7,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RoomController:Controller
+    public class RoomController:ControllerBase
     {
         private readonly AppContextDB _context;
 
@@ -36,13 +36,13 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 return NotFound();
             }
 
-            if (accommodation.Rooms.Count == 0)
+            /*if (accommodation.Rooms.Count == 0)
             {
                 ViewBag.AlertType = "warning";
                 ViewBag.AlertMsg = "Please add at least one room to your listing !";
-            }
+            }*/
 
-            return View(accommodation);
+            return (IActionResult)accommodation;
         }
 
 
@@ -66,8 +66,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 case "Bedroom":
                     if (tv == null && closet == null && (singleBedNumber == null || int.Parse(singleBedNumber) == 0) && (doubleBedNumber == null || int.Parse(doubleBedNumber) == 0))
                     {
-                        ViewBag.AlertType = "danger";
-                        ViewBag.AlertMsg = "Please add at least one piece of equipment to your room !";
+                        //ViewBag.AlertType = "danger";
+                        //ViewBag.AlertMsg = "Please add at least one piece of equipment to your room !";
                     }
                     else
                     {
@@ -85,8 +85,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 case "Bathroom":
                     if (bathtub == null && shower == null && washingMachine == null)
                     {
-                        ViewBag.AlertType = "danger";
-                        ViewBag.AlertMsg = "Please add at least one piece of equipment to your room !";
+                        //ViewBag.AlertType = "danger";
+                        //ViewBag.AlertMsg = "Please add at least one piece of equipment to your room !";
                     }
                     else
                     {
@@ -102,8 +102,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 case "Kitchen":
                     if (oven == null && freezer == null && coffeeMaker == null)
                     {
-                        ViewBag.AlertType = "danger";
-                        ViewBag.AlertMsg = "Please add at least one piece of equipment to your room !";
+                        //ViewBag.AlertType = "danger";
+                        //ViewBag.AlertMsg = "Please add at least one piece of equipment to your room !";
                     }
                     else
                     {
@@ -152,7 +152,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Accommodation/DeletePicture
-        [HttpGet("Accommodation/DeleteRoom/{id}")]
+        [HttpDelete("Accommodation/DeleteRoom/{id}")]
         public async Task<IActionResult> DeleteRoom(Guid id, Guid accommodationId)
         {
             // перевірка, чи є у користувача зображення

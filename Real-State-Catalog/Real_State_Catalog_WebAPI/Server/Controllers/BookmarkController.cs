@@ -8,7 +8,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class BookmarkController : Controller
+    public class BookmarkController : ControllerBase
     {
         private readonly AppContextDB _context;
         private readonly string _userId;
@@ -32,7 +32,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 await _context.SaveChangesAsync();
             }
         }
-        [HttpGet("DeleteBookmark")]
+        [HttpDelete("DeleteBookmark")]
         public async Task Delete(Guid offerId)
         {
             var bookmark = BookmarkExists(offerId);

@@ -11,7 +11,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Admin")]
-    public class UserController:Controller
+    public class UserController:ControllerBase
     {
         private readonly AppContextDB _context;
         private readonly UserManager<User> _userManager;
@@ -46,14 +46,14 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: UserController
-        [HttpGet("Index")]
+        /*[HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
             return View(await _userManager.Users.ToListAsync());
-        }
+        }*/
 
         // GET: UserController/Details
-       // [HttpGet("Details")]
+       //[HttpGet("Details")]
         /*public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -100,7 +100,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault()
             };
 
-            return View(this);
+            return (IActionResult)this;
         }
 
         // POST: UserController/Edit
@@ -145,7 +145,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: UserController/Delete
-        [HttpGet("Detele")]
+        /*[HttpGet("Detele")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -160,11 +160,11 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 return NotFound($"Unable to load user with ID '{id}'");
             }
 
-            return View(user);
-        }
+            return (IActionResult)user;
+        }*/
 
         // POST: UserController/Delete
-        [HttpPost("Delete")]
+        [HttpDelete("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {

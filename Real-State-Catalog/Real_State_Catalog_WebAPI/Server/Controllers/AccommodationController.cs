@@ -10,7 +10,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Admin,Host")]
-    public class AccommodationController : Controller
+    public class AccommodationController : ControllerBase
     {     
             private readonly AppContextDB _context;
             private readonly UserManager<User> _userManager;
@@ -24,7 +24,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
 
             // GET: Accommodation
-            [HttpGet("index")]
+            //[HttpGet("index")]
+            [NonAction]
             public async Task<IActionResult> Index()
             {
                 User user = await _userManager.GetUserAsync(User);
@@ -33,14 +34,14 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
                 if (await _userManager.IsInRoleAsync(user, "Admin"))
                 {
-                    return View(await _context.Accommodations
-                        .Include(a => a.Address).Include(a => a.User).ToListAsync());
+                    return (IActionResult)await _context.Accommodations
+                        .Include(a => a.Address).Include(a => a.User).ToListAsync();
                 }
                 else
                 {
-                    return View(await _context.Accommodations
+                    return (IActionResult)await _context.Accommodations
                         .Where(a => a.UserId == user.Id)
-                        .Include(a => a.Address).Include(a => a.User).ToListAsync());
+                        .Include(a => a.Address).Include(a => a.User).ToListAsync();
                 }
             }
 
@@ -68,15 +69,15 @@ namespace Real_State_Catalog_WebAPI.Controllers
                     return NotFound();
                 }
 
-                return View(accommodation);
+                return (IActionResult)accommodation;
             }
 
             // GET: Accommodation/Create
-            [NonAction]
+           /* [NonAction]
             public IActionResult Create()
             {
                 return View();
-            }
+            }*/
 
             // POST: Accommodation/Create
             //[HttpPost, ActionName("Create")]
@@ -88,7 +89,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 [Bind("ArrivalHour, DepartureHour, PetAllowed, PartyAllowed, SmokeAllowed")] HouseRules houseRules)
             {
                 if (!ModelState.IsValid) 
-            { return View(accommodation); }
+            { return (IActionResult)accommodation; }
                 accommodation.Latitude=double.Parse(accommodation.LatitudeRaw.Replace(".",","));
                 accommodation.Longitude=double.Parse(accommodation.LongitudeRaw.Replace(".", ","));  
 
@@ -122,7 +123,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 {
                     return NotFound();
                 }
-                return View(accommodation);
+                return (IActionResult)accommodation;
             }
 
             // POST: Accommodation/Edit
@@ -139,7 +140,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
                     return NotFound();
                 }
 
-                if (!ModelState.IsValid) { return View(accommodation); }
+                if (!ModelState.IsValid) { return (IActionResult)accommodation; }
 
                 accommodation.Latitude = double.Parse(accommodation.LatitudeRaw.Replace(".", ","));
                 accommodation.Longitude = double.Parse(accommodation.LongitudeRaw.Replace(".", ","));
@@ -166,7 +167,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
 
             // GET: Accommodation/Delete
-            [HttpGet("delete")]
+            [HttpGet("Delete")]
             public async Task<IActionResult> Delete(Guid? id)
             {
                 if (id == null)
@@ -181,11 +182,11 @@ namespace Real_State_Catalog_WebAPI.Controllers
                     return NotFound();
                 }
 
-                return View(accommodation);
+                return (IActionResult)accommodation;
             }
 
             // POST: Accommodation/Delete
-            [HttpPost, ActionName("Delete")]
+            [HttpPost("DeleteConfirmed")]
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> DeleteConfirmed(Guid id)
             {

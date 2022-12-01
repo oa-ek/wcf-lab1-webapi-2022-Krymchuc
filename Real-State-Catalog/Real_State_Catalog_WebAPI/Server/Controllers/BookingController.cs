@@ -14,7 +14,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class BookingController : Controller
+    public class BookingController : ControllerBase
     {
         private readonly AppContextDB _context;
         private readonly UserManager<User> _userManager;
@@ -26,7 +26,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Booking
-        [HttpGet("Index")]
+        //[HttpGet("Index")]
+       /* [NonAction]
         public async Task<IActionResult> Index()
         {
             User user = await _userManager.GetUserAsync(User);
@@ -46,10 +47,10 @@ namespace Real_State_Catalog_WebAPI.Controllers
                     .Where(b => b.UserId == user.Id)
                     .Include(b => b.Offer).Include(b => b.User).Include(b => b.Offer.Accommodation).ToListAsync());
             }
-        }
+        }*/
 
         // GET: Booking/HostIndex
-        [HttpGet("HostIndex")]
+        /*[HttpGet("HostIndex")]
         [Authorize(Roles = "Host, Admin")]
         public async Task<IActionResult> HostIndex()
         {
@@ -62,7 +63,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
             return View("Index", await _context.Booking
                 .Include(b => b.Offer).Include(b => b.User).Include(b => b.Offer.Accommodation)
                 .Where(b => b.Offer.Accommodation.UserId == user.Id).ToListAsync());
-        }
+        }*/
 
 
         // POST: Booking/Details
@@ -81,9 +82,9 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 return NotFound();
             }
 
-            ViewBag.ReturnAction = returnAction;
+            //ViewBag.ReturnAction = returnAction;
 
-            return View(booking);
+            return (IActionResult)booking;
         }
 
         // POST: Booking/Create

@@ -10,7 +10,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
    //[Route("Accommodation")]
-    public class AmenityController : Controller
+    public class AmenityController : ControllerBase
     {
         private readonly AppContextDB _context;
 
@@ -31,17 +31,17 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
             if (room == null) { return NotFound(); }
 
-            if (TempData["AlertType"] != null && TempData["AlertMsg"] != null)
+            /*if (TempData["AlertType"] != null && TempData["AlertMsg"] != null)
             {
                 ViewBag.AlertType = TempData["AlertType"];
                 ViewBag.AlertMsg = TempData["AlertMsg"];
-            }
+            }*/
 
             string roomType = room.RoomType.ToString();
 
-            ViewBag.AmenityTypes = AmenityTools.AmenitiesForRoom(roomType);
+            //ViewBag.AmenityTypes = AmenityTools.AmenitiesForRoom(roomType);
 
-            return View(room);
+            return (IActionResult)room;
         }
 
         // POST: Accommodation/AddAmenity
@@ -65,15 +65,15 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
             else
             {
-                TempData["AlertType"] = "warning";
-                TempData["AlertMsg"] = "Invalid equipment !";
+                //TempData["AlertType"] = "warning";
+                //TempData["AlertMsg"] = "Invalid equipment !";
             }
 
             return RedirectToAction("ManageAmenities", new { roomId });
         }
 
         // POST: Accommodation/DeleteAmenity
-        [HttpPost("DeleteAmenity/{amenityId:guid}")]
+        [HttpDelete("DeleteAmenity/{amenityId:guid}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAmenity(Guid amenityId, Guid roomId)
         {
@@ -88,8 +88,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
             else
             {
-                TempData["AlertType"] = "warning";
-                TempData["AlertMsg"] = "A room must contain at least 1 piece of equipment !";
+                //TempData["AlertType"] = "warning";
+                //TempData["AlertMsg"] = "A room must contain at least 1 piece of equipment !";
             }
 
             return RedirectToAction("ManageAmenities", new { roomId });

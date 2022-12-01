@@ -14,7 +14,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PictureController : Controller
+    public class PictureController : ControllerBase
     {
         private readonly AppContextDB _context;
         private readonly IWebHostEnvironment _environment;
@@ -46,17 +46,17 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
             if (accommodation.Pictures.Count == 0)
             {
-                ViewBag.AlertType = "Warning";
-                ViewBag.AlertMsg = "Please add at least one photo to your listing!";
+                //ViewBag.AlertType = "Warning";
+                //ViewBag.AlertMsg = "Please add at least one photo to your listing!";
             }
 
-            if (TempData["AlertType"] != null && TempData["AlertMsg"] != null)
+            /*if (TempData["AlertType"] != null && TempData["AlertMsg"] != null)
             {
                 ViewBag.AlertType = TempData["AlertType"];
                 ViewBag.AlertMsg = TempData["AlertMsg"];
-            }
+            }*/
 
-            return View(accommodation);
+            return (IActionResult)accommodation;
         }
 
         // POST: Accommodation/ManagePictures
@@ -75,8 +75,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
             {
                 if (await _context.Pictures.CountAsync(p => p.AccommodationId == (Guid)id) == 12)
                 {
-                    TempData["AlertType"] = "Warning";
-                    TempData["AlertMsg"] = "You have reached the maximum number of photos! One or more photos could not be added.";
+                    //TempData["AlertType"] = "Warning";
+                    //TempData["AlertMsg"] = "You have reached the maximum number of photos! One or more photos could not be added.";
                     
                     return RedirectToAction("ManagePictures", new { id });
                 }
@@ -100,7 +100,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Accommodation/DeletePicture
-        [HttpGet("DeletePicture/{id:guid}")]
+        [HttpDelete("DeletePicture/{id:guid}")]
         public async Task<IActionResult> DeletePicture(Guid id, Guid accommodationId)
         {
             //Перевірка чи є у користувача фото

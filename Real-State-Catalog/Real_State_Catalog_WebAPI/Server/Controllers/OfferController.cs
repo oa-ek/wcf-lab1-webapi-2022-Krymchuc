@@ -11,7 +11,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Admin,Host")]
-    public class OfferController : Controller
+    public class OfferController : ControllerBase
     {
         private readonly AppContextDB _context;
         private readonly UserManager<User> _userManager;
@@ -23,7 +23,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
         }
 
         // GET: Offer
-        [HttpGet("Index")]
+       //[HttpGet("Index")]
+       /*[NonAction]
         public async Task<IActionResult> Index()
         {
             User user = await _userManager.GetUserAsync(User);
@@ -41,7 +42,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
                     .Include(o => o.Accommodation)
                     .Where(o => o.Accommodation.UserId == user.Id).ToListAsync());
             }
-        }
+        }*/
 
         // GET: Offer/Details
         [HttpGet("Details")]
@@ -60,11 +61,11 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 return NotFound();
             }
 
-            return View(offer);
+            return (IActionResult)offer;
         }
         
         // GET: Offer/Create
-        [HttpGet("Create")]
+        /*[HttpGet("Create")]
         public async Task<IActionResult> Create()
         {
             User user = await _userManager.GetUserAsync(User);
@@ -81,7 +82,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
             }
 
             return View();
-        }
+        }*/
 
         // POST: Offer/Create
         [HttpPost("Create")]
@@ -95,8 +96,8 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             
-            ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Id", offer.AccommodationId);
-            return View(offer);
+           // ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Id", offer.AccommodationId);
+            return (IActionResult)offer;
         }
 
         // GET: Offer/Edit
@@ -109,7 +110,7 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
             if (offer == null) { return NotFound(); }
 
-            return View(offer);
+            return (IActionResult)offer;
         }
 
         // POST: Offer/Edit
@@ -146,12 +147,12 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Id", offer.AccommodationId);
-            return View(offer);
+            //ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Id", offer.AccommodationId);
+            return (IActionResult)offer;
         }
 
         // GET: Offer/Delete
-        [HttpGet("Delete")]
+        /*[HttpGet("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -167,11 +168,11 @@ namespace Real_State_Catalog_WebAPI.Controllers
                 return NotFound();
             }
 
-            return View(offer);
-        }
+            return (IActionResult)offer;
+        }*/
 
         // POST: Offer/Delete
-        [HttpPost("Delete")]
+        [HttpDelete("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid? id)
         {
@@ -212,9 +213,9 @@ namespace Real_State_Catalog_WebAPI.Controllers
 
             var userId = _userManager.GetUserId(User);
 
-            if (userId != null && BookmarkExist(offer.Id, userId))
+            /*if (userId != null && BookmarkExist(offer.Id, userId))
             {
-                ViewBag.Bookmark = true;
+                //ViewBag.Bookmark = true;
             }
             else if (userId != null)
             {
@@ -225,27 +226,27 @@ namespace Real_State_Catalog_WebAPI.Controllers
             {
                 ViewBag.AlertType = TempData["AlertType"];
                 ViewBag.AlertMsg = TempData["AlertMsg"];
-            }
+            }*/
 
-            return View(offer);
+            return (IActionResult)offer;
         }
         [HttpGet("AddBookmark")]
         public async Task<IActionResult> AddBookmark(Guid id)
         {
             await new BookmarkController(_context, _userManager.GetUserId(User)).Add(id);
 
-            TempData["AlertType"] = "success";
-            TempData["AlertMsg"] = "Offer successfully added to favorites ! <a href=\"/Identity/Account/Manage/Bookmark\">Favorits</a>";
+            //TempData["AlertType"] = "success";
+            //TempData["AlertMsg"] = "Offer successfully added to favorites ! <a href=\"/Identity/Account/Manage/Bookmark\">Favorits</a>";
 
             return RedirectToAction("View", new { id });
         }
-        [HttpGet("DeleteBookmark")]
+        [HttpDelete("DeleteBookmark")]
         public async Task<IActionResult> DeleteBookmark(Guid id)
         {
             await new BookmarkController(_context, _userManager.GetUserId(User)).Delete(id);
 
-            TempData["AlertType"] = "warning";
-            TempData["AlertMsg"] = "Deal successfully removed from favorites ! <a href=\"/Identity/Account/Manage/Bookmark\">Favorits</a>";
+            //TempData["AlertType"] = "warning";
+            //TempData["AlertMsg"] = "Deal successfully removed from favorites ! <a href=\"/Identity/Account/Manage/Bookmark\">Favorits</a>";
 
             return RedirectToAction("View", new { id });
         }
