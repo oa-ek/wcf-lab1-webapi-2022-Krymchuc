@@ -146,7 +146,7 @@
         if (Id != null)
         {
             Title = "Update";
-            RoomModel = await RoomRepository.GetHotelRoom(Id.Value);
+            RoomModel = await RoomRepository.GetRoom(Id.Value);
             if (RoomModel?.RoomImages != null)
             {
                 RoomModel.ImageUrls = RoomModel.RoomImages.Select(u => u.RoomImageURL).ToList();
@@ -199,7 +199,7 @@
             {
                 RoomModel.Details = await QuillHtml.GetHTML();
 
-                var updateRoomResult = await RoomRepository.UpdateHotelRoom(RoomModel.Id, RoomModel);
+                var updateRoomResult = await RoomRepository.UpdateRoom(RoomModel.Id, RoomModel);
 
                 if (RoomModel.ImageUrls != null && RoomModel.ImageUrls.Any())
                 {
@@ -210,22 +210,22 @@
                             var imageName = deletedImageName.Replace($"{NavigationManager.BaseUri}RoomImages/", "");
 
                             var result = FileUpload.DeleteFile(imageName);
-                            await ImagesRepository.DeleteHotelImageByImageUrl(deletedImageName);
+                            await ImagesRepository.DeleteImageByImageUrl(deletedImageName);
                         }
                     }
 
 
 
-                    await AddHotelRoomImage(updateRoomResult);
+                    await AddRoomImage(updateRoomResult);
                 }
                 await JsRuntime.ToastrSuccess("Room updated successfully.");
             }
             else
             {
                 RoomModel.Details = await QuillHtml.GetHTML();
-                var createdResult = await RoomRepository.CreateHotelRoom(RoomModel);
-                await AddHotelRoomImage(createdResult);
-                await JsRuntime.ToastrSuccess("Hotel room created successfully.");
+                var createdResult = await RoomRepository.CreateRoom(RoomModel);
+                await AddRoomImage(createdResult);
+                await JsRuntime.ToastrSuccess("Room created successfully.");
             }
         }
         catch (Exception ex)
@@ -296,12 +296,12 @@
             if (RoomModel.RoomImages.Where(x => x.RoomImageURL == imageUrl).Count() == 0)
             {
 
-                RoomImage = new HotelRoomImageDTO()
+                RoomImage = new RoomImageDTO()
                     {
                         RoomId = roomDetails.Id,
                         RoomImageURL = imageUrl
                     };
-                await ImagesRepository.CreateHotelRoomImage(RoomImage);
+                await ImagesRepository.CreateRoomImage(RoomImage);
             }
         }
     }

@@ -52,7 +52,7 @@
                 }
                 else
                 {
-                    <td colspan = 5>No Hotels Found!</td>
+                    <td colspan = 5>No Rooms Found!</td>
 
                     }
                 }
@@ -72,7 +72,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Rooms = await RoomRepository.GetAllHotelRoom();
+        Rooms = await RoomRepository.GetAllRoom();
     }
 
     private void RedirectTo(int roomId)
@@ -94,19 +94,18 @@
         if (isConfirmed && DeleteRoomId != null)
         {
 
-            RoomDTO hotelRoom = await RoomRepository.GetHotelRoom(DeleteRoomId.Value);
-            foreach (var image in hotelRoom.RoomImages)
+            RoomDTO room = await RoomRepository.GetRoom(DeleteRoomId.Value);
+            foreach (var image in room.RoomImages)
             {
                 var imageName = image.RoomImageURL.Replace($"{NavigationManager.BaseUri}RoomImages/", "");
                 FileUpload.DeleteFile(imageName);
 
             }
-            //once the images are deleted, delete the hotel room by its id
-            await RoomRepository.DeleteHotelRoom(DeleteRoomId.Value);
-            await JsRuntime.ToastrSuccess("Hotel Room Deleted");
+            await RoomRepository.DeleteRoom(DeleteRoomId.Value);
+            await JsRuntime.ToastrSuccess("Room Deleted");
 
             //re-populate the list of rooms
-            Rooms = await RoomRepository.GetAllHotelRoom();
+            Rooms = await RoomRepository.GetAllRoom();
         }
                 await JsRuntime.InvokeVoidAsync("HideDeleteConfirmationModal");
 
