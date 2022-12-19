@@ -18,7 +18,7 @@ namespace Real_State_Catalog.Core
         [Display(Name = "Name")]
         public String? LastName { get; set; }
 
-        [Display(Name = "Slot(s)")]
+        [Display(Name = "Accommodation")]
         public virtual List<Accommodation>? Accommodations { get; set; }
 
         [Display(Name = "Favorites")]

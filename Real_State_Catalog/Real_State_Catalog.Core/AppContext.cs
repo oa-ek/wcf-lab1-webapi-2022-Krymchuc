@@ -19,5 +19,6 @@ namespace Real_State_Catalog.Core
         public DbSet<Amenity> Amenity { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<OfferDetail> OfferDetails { get; set; }
+        public DbSet<Bookmark> Bookmarks { get; set; }
     }
 }

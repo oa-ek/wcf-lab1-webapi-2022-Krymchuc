@@ -27,7 +27,7 @@ namespace Real_State_Catalog.Repository
             return _mapper.Map<List<AmenityCreateDto>>(_ctx.Amenity.ToList());
         }
 
-        public async Task<Amenity> AddBrandByDtoAsync(AmenityCreateDto amenityDto)
+        public async Task<Amenity> AddAmenityByDtoAsync(AmenityCreateDto amenityDto)
         {
             var amenity = new Amenity();
             amenity.Name = amenityDto.Name;

@@ -20,7 +20,7 @@ namespace Real_State_Catalog.Repository
             this._ctx = _ctx;
         }
 
-        public async Task<AccommodationCreateDto> AddKeyAsync(Accommodation ac)
+        public async Task<AccommodationCreateDto> AddAccommodationAsync(Accommodation ac)
         {
             _ctx.Accommodations.Add(ac);
             await _ctx.SaveChangesAsync();
@@ -70,11 +70,11 @@ namespace Real_State_Catalog.Repository
 
         public List<Accommodation> GetAccommodations()
         {
-            var keyList = _ctx.Accommodations.Include(x => x.Amenity).ToList();
-            return keyList;
+            var accommodationList = _ctx.Accommodations.Include(x => x.Amenity).ToList();
+            return accommodationList;
         }
 
-        public async Task DeleteKeyAsync(int id)
+        public async Task DeleteAccommodationAsync(int id)
         {
             _ctx.Remove(GetAccommodation(id));
             await _ctx.SaveChangesAsync();
@@ -95,7 +95,7 @@ namespace Real_State_Catalog.Repository
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task<AccommodationCreateDto> GetKeyDto(int id)
+        public async Task<AccommodationCreateDto> GetAccommodationDto(int id)
         {
             var ac = await _ctx.Accommodations.Include(x => x.Amenity).FirstAsync(x => x.Id == id);
 

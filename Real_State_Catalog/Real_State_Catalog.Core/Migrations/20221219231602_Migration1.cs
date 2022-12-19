@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Real_State_Catalog.Core.Migrations
 {
-    public partial class Init : Migration
+    public partial class Migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,6 +67,25 @@ namespace Real_State_Catalog.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bookmarks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OfferId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookmarks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bookmarks_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OfferDetails",
                 columns: table => new
                 {
@@ -97,6 +116,11 @@ namespace Real_State_Catalog.Core.Migrations
                 column: "AmenityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bookmarks_OfferId",
+                table: "Bookmarks",
+                column: "OfferId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OfferDetails_AccommodationId",
                 table: "OfferDetails",
                 column: "AccommodationId");
@@ -109,6 +133,9 @@ namespace Real_State_Catalog.Core.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Bookmarks");
+
             migrationBuilder.DropTable(
                 name: "OfferDetails");
 

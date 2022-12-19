@@ -84,6 +84,27 @@ namespace Real_State_Catalog.Core.Migrations
                     b.ToTable("Amenity");
                 });
 
+            modelBuilder.Entity("Real_State_Catalog.Core.Bookmark", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("OfferId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OfferId");
+
+                    b.ToTable("Bookmarks");
+                });
+
             modelBuilder.Entity("Real_State_Catalog.Core.Offer", b =>
                 {
                     b.Property<int>("Id")
@@ -145,6 +166,15 @@ namespace Real_State_Catalog.Core.Migrations
                         .HasForeignKey("AmenityId");
 
                     b.Navigation("Amenity");
+                });
+
+            modelBuilder.Entity("Real_State_Catalog.Core.Bookmark", b =>
+                {
+                    b.HasOne("Real_State_Catalog.Core.Offer", "Offer")
+                        .WithMany()
+                        .HasForeignKey("OfferId");
+
+                    b.Navigation("Offer");
                 });
 
             modelBuilder.Entity("Real_State_Catalog.Core.OfferDetail", b =>
