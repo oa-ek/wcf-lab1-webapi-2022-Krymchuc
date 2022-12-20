@@ -1,0 +1,37 @@
+﻿@using Real_State_Catalog.Shared.Dtos
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+        <BlazoredTypeahead SearchMethod="@SearchAccommodation" 
+                            TValue="AccommodationCreateDto"
+                            TItem="AccommodationCreateDto"
+                            Value="searchingaccommodation"
+                            ValueChanged="HandleSearch"
+                            ValueExpression="@(()=>searchingaccommodation)">
+            <SelectedTemplate>
+                @context.Name
+            </SelectedTemplate>
+            <ResultTemplate>
+                @context.Name
+            </ResultTemplate>
+            <NotFoundTemplate>
+                Sorry, but we didn't find anything...
+            </NotFoundTemplate>
+        </BlazoredTypeahead>
+
+@code {
+    private AccommodationCreateDto searchingaccommodation;
+
+    private async Task<IEnumerable<AccommodationCreateDto>> SearchAccommodation(string searchBy)
+    {
+        var response = await Http.GetFromJsonAsync<List<AccommodationCreateDto>>($"api/accommodation/search/{searchBy}");
+        return response;
+    }
+
+    private void HandleSearch(AccommodationCreateDto accommodation)
+    {
+        if (accommodation == null) return;
+        searchingaccommodation = accommodation;
+        Navigation.NavigateTo($"/details/{searchingaccommodation.Id}");
+    }
+}

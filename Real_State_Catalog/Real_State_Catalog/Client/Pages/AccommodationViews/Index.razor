@@ -1,0 +1,42 @@
+﻿@page "/accommodation/index"
+@using Real_State_Catalog.Shared.Dtos;
+@using Real_State_Catalog.Client.Pages;
+@inject HttpClient Http
+
+<div>
+    <a class="btn btn-success" href="/create">Add accommodation</a>
+</div>
+<br />
+<tbody>
+        <div class="container row">
+        @foreach (var item in accommodations)
+        {
+                            <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                              <img class="card-img-top" src="@item.ImagePath" alt="@item.Name">
+                              <div class="card-body">
+                                 <h5 class="card-title">@item.Name</h5>
+                                 <p class="card-text">Address: @item.Adress</p>
+                                 <p class="card-text">Price: @item.Price $</p>
+                                 <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+
+                                                    <a class="btn btn-sm btn-outline-secondary" href="/edit/@item.Id">Edit</a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/details/@item.Id" asp-route-id="@item.Id">Details</a>
+                                                    <a class="btn btn-sm btn-outline-secondary" href="/delete/@item.Id" asp-route-id="@item.Id">Delete</a>
+                                    </div>
+                                 </div>
+                              </div>
+                            </div>
+                            </div>
+        }
+        </div>
+</tbody>
+
+@code {
+	List<AccommodationCreateDto> accommodations = new List<AccommodationCreateDto>();
+	protected override async Task OnInitializedAsync()
+	{
+		accommodations = await Http.GetFromJsonAsync<List<AccommodationCreateDto>>("api/accommodation");
+	}
+}

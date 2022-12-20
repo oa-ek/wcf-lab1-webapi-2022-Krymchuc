@@ -1,0 +1,124 @@
+﻿@page "/details/{id:int}"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@using Real_State_Catalog.Client.Pages;
+@using Real_State_Catalog.Shared.Dtos;
+
+
+<h3>@accommodation.Name</h3>
+<hr />
+	<EditForm Model="accommodation" OnValidSubmit="EditAccommodation">
+ <DataAnnotationsValidator />
+ <div>
+<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => accommodation.Name" />
+					<label for="name">Name</label>
+				</div>
+				<div class="col-12">
+					<InputText id="name" @bind-Value="accommodation.Name"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => accommodation.Description" />
+					<label for="description">Description</label>
+				</div>
+				<div class="col-12">
+					<InputText id="description" @bind-Value="accommodation.Description"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => accommodation.Adress" />
+					<label for="address">Address</label>
+				</div>
+				<div class="col-12">
+					<InputText id="address" @bind-Value="accommodation.Adress"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => accommodation.Price" />
+					<label for="price">Price</label>
+				</div>
+				<div class="col-12">
+					<InputNumber id="description" @bind-Value="accommodation.Price"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => accommodation.Amenity" />
+					<label for="amenity">Amenity</label>
+				</div>
+				<div class="col-12">
+					<InputSelect id="brands" @bind-Value="accommodation.Amenity">
+						@foreach (var b in amenity)
+						{
+							<option value="@b.Name">@b.Name</option>
+						}
+					</InputSelect>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => accommodation.MaxTraveler" />
+					<label for="maxtraveler">MaxTraveler</label>
+				</div>
+				<div class="col-12">
+					<InputNumber id="maxtraveler" @bind-Value="accommodation.MaxTraveler"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => accommodation.CountOfRooms" />
+					<label for="countofrooms">Count Of Rooms</label>
+				</div>
+				<div class="col-12">
+					<InputNumber id="countofrooms" @bind-Value="accommodation.CountOfRooms"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => accommodation.Type" />
+					<label for="type">Type</label>
+				</div>
+				<div class="col-12">
+					<InputText id="type" @bind-Value="accommodation.Type"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<ValidationMessage For="() => accommodation.ImagePath" />
+					<label for="imagepath">Image Path</label>
+				</div>
+				<div class="col-12">
+					<InputText id="imagepath" @bind-Value="accommodation.ImagePath"/>
+				</div>
+			</div>
+			<div class="col-12">
+			<button type="submit" class="btn btn-success">Відредагувати</button>
+			</div>
+	</div>
+	</EditForm>
+
+@code {
+
+
+	AccommodationCreateDto accommodation = new AccommodationCreateDto();
+
+	[Parameter]
+	public int Id { get; set; }
+
+	List<AmenityCreateDto> amenity = new List<AmenityCreateDto>();
+	protected override async Task OnParametersSetAsync()
+	{
+		accommodation = await Http.GetFromJsonAsync<AccommodationCreateDto>($"api/accommodation/{Id}");
+		amenity = await Http.GetFromJsonAsync<List<AmenityCreateDto>>("api/amenity");
+	}
+	public async Task EditAccommodation()
+	{
+
+	}
+
+}

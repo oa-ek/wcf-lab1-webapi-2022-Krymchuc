@@ -1,0 +1,28 @@
+﻿@page "/delete/{id:int}"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+@using Real_State_Catalog.Shared;
+
+
+<h4>Are you sure you want to remove this accommodation?(Id=@Id)</h4>
+<hr />
+	<EditForm Model="Id" OnSubmit="DeleteAccommodation">
+			<div class="col-12">
+			<button type="submit" class="btn btn-success">Delete</button>
+			</div>
+	</EditForm>
+@code {
+	[Parameter]
+	public int Id { get; set; }
+
+	public async Task DeleteAccommodation()
+	{
+		var result = await Http.DeleteAsync($"api/accommodation/{Id}");
+		if (result.IsSuccessStatusCode)
+		{
+			Navigation.NavigateTo("/");
+		}
+	}
+
+}
